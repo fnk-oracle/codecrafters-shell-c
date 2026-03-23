@@ -8,7 +8,7 @@ int main(int argc, char *argv[]) {
 
   // TODO: Uncomment the code below to pass the first stage
   while (1){
-    printf("$");
+    printf("$ ");
 
     char command[1024];
     if(fgets(command, 1024, stdin) == NULL){
