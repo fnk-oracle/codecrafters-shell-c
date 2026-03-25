@@ -37,7 +37,7 @@ int main(int argc, char *argv[]) {
       else{
         //2. Check PATH for executables
         char *path_env = getenv("PATH");
-        char *path_copy = path_env;
+        char *path_copy = strdup(path_env);
         char *dir = strtok(path_copy, ":");
         int found = 0;
 
