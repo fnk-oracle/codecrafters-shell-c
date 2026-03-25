@@ -56,8 +56,7 @@ int main(int argc, char *argv[]) {
         if(!found){
           printf("%s: not found\n", arg);
         }
-        free(path_copy);
-
+       
       }
     }
 
