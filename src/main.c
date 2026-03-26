@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include<string.h>
 #include<unistd.h>
+#include<sys/types.h>
+#include<sys/wait.h>
 
 int main(int argc, char *argv[]) {
   // Flush after every printf
@@ -56,13 +58,43 @@ int main(int argc, char *argv[]) {
         if(!found){
           printf("%s: not found\n", arg);
         }
+
        
       }
     }
 
 
     else{
-      printf("%s: command not found\n", command);
+      // 1. Prepare arguments for execvp
+      char *args[64];
+      int i = 0;
+      char *token = strtok(command, " ");
+
+      while(token != NULL){
+        args[i++] = token;
+        token = strtok(NULL, " ");
+      }
+
+      args[i] = NULL; //Must be NULL terminated
+
+      //2. Try to runt the program
+      pid_t pid = fork();
+      if(pid == 0){
+        //In the CHILD process
+          if(execvp(args[0], args) == -1){
+            //If it fails to find/run the program, THEN print the error
+            printf("%s: command not found\n", args[0]);
+            exit(1);
+          }
+
+      }
+      else if (pid > 0){
+        //In the PARENT process
+        wait(NULL);
+      }
+      else{
+        perror("fork");
+      }
     }
 
     
