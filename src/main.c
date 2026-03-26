@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
       char *arg = command +5;
 
       //1. Checking Builtins first
-      if(strcmp(arg, "echo") == 0 || strcmp(arg, "exit") == 0 || strcmp(arg, "type") == 0){
+      if(strcmp(arg, "echo") == 0 || strcmp(arg, "exit") == 0 || strcmp(arg, "type") == 0 || strcmp(arg, "pwd") == 0){
         printf("%s is a shell builtin\n", arg);
       } 
       else{
@@ -60,6 +60,16 @@ int main(int argc, char *argv[]) {
         }
 
        
+      }
+    }
+
+    else if(strcmp(command, "pwd") == 0){
+      char cwd[1024];
+      if(getcwd(cwd, sizeof(cwd)) != NULL){
+        printf("%s\n", cwd);
+      }
+      else{
+        perror("getcwd() error");
       }
     }
 
